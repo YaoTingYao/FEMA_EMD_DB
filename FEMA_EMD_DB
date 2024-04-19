@@ -1,0 +1,356 @@
+SELECT * FROM nEMPG;
+SELECT * FROM NRI;
+
+/* Create Community Emergency Response Team(CERT) table. */
+DROP TABLE IF EXISTS CERT;
+CREATE TABLE CERT (
+	id int GENERATED ALWAYS AS IDENTITY,
+    Name text NOT NULL,
+	Phone varchar(100), 
+	Address1 varchar(100), 
+	Address2 varchar(100),	
+	City text,
+	State text, 
+	Zip integer,
+	Country varchar(100), 
+	Sponsoring_Organization varchar(255), 
+	Jurisdiction_Type varchar(30), 
+	Tribal varchar(100), 
+	Zip_Or_Counties varchar(2550), 
+	Last_Updated_Date varchar(100),
+	Earthquake integer,
+	Flood integer,
+	Excessive_Heat integer,
+	Hurricane_Coastal_Storm integer,
+	Missing_Person_Search integer,
+	Landslide_Mudflow integer,
+	Pandemic integer,
+	Severe_Thunderstorm integer,
+	Tornado integer,
+	Tsunami integer,
+	Volcanic_Eruption integer,
+	Wildland_Urban_Interface_Fire integer,
+	Winter_Storm integer,
+	Do_Not_Know integer
+);
+COPY CERT 
+(Name, Phone, Address1, Address2, City, State, Zip, Country, 
+ Sponsoring_Organization, Jurisdiction_Type, Tribal, Zip_Or_Counties, Last_Updated_Date,
+ Earthquake, Flood, Excessive_Heat, Hurricane_Coastal_Storm, Missing_Person_Search, 
+ Landslide_Mudflow,Pandemic,Severe_Thunderstorm,Tornado,Tsunami, Volcanic_Eruption, 
+ Wildland_Urban_Interface_Fire, Winter_Storm, Do_Not_Know) 
+FROM 'D:\classfileR\376\FinalProject\data2\CERT Dataset\CERT.csv' WITH CSV HEADER; 
+SELECT * From CERT;
+-- Don't forget to change the file path to your own.
+
+/* Create Emergency Management Performance Grants(EMPG) table. */
+DROP TABLE IF EXISTS EMPG;
+CREATE TABLE EMPG (
+    Reporting_Period varchar(100), 
+	State text, 
+	Legal_Agency_Name varchar(100), 
+	Project_Type varchar(1000), 
+	Project_Start_Date varchar(100), 
+	Project_End_Date varchar(100), 
+	EMPG_Total_Funding numeric(8), 
+	id varchar(100)
+);
+COPY EMPG 
+(Reporting_Period, State, Legal_Agency_Name, 
+ Project_Type, Project_Start_Date, Project_End_Date, EMPG_Total_Funding, id) 
+FROM 'D:\classfileR\376\FinalProject\data2\EMPG Dataset\EMPG.csv' WITH CSV HEADER; 
+-- SELECT * From EMPG;
+-- Don't forget to change the file path to your own.
+
+/* Create a new table that contains state abbrevation (including unincorporated territories). */
+DROP TABLE IF EXISTS nEMPG;
+SELECT Reporting_Period, State, Legal_Agency_Name, 
+ Project_Type, Project_Start_Date, Project_End_Date, EMPG_Total_Funding, id,
+CASE 
+WHEN "state" ILIKE '%alabama%' THEN 'AL'
+WHEN "state" ILIKE '%alaska%' THEN 'AK'
+WHEN "state" ILIKE '%american samoa%' THEN 'AS'
+WHEN "state" ILIKE '%arizona%' THEN 'AZ'
+WHEN "state" ILIKE '%arkansas%' THEN 'AR'
+WHEN "state" ILIKE '%california%' THEN 'CA'
+WHEN "state" ILIKE '%colorado%' THEN 'CO'
+WHEN "state" ILIKE '%connecticut%' THEN 'CT'
+WHEN "state" ILIKE '%delaware%' THEN 'DE'
+WHEN "state" ILIKE '%district of columbia%' THEN 'DC'
+WHEN "state" ILIKE '%florida%' THEN 'FL'
+WHEN "state" ILIKE '%georgia%' THEN 'GA'
+WHEN "state" ILIKE '%guam%' THEN 'GU'
+WHEN "state" ILIKE '%hawaii%' THEN 'HI'
+WHEN "state" ILIKE '%idaho%' THEN 'ID'
+WHEN "state" ILIKE '%illinois%' THEN 'IL'
+WHEN "state" ILIKE '%indiana%' THEN 'IN'
+WHEN "state" ILIKE '%iowa%' THEN 'IA'
+WHEN "state" ILIKE '%kansas%' THEN 'KS'
+WHEN "state" ILIKE '%kentucky%' THEN 'KY'
+WHEN "state" ILIKE '%louisiana%' THEN 'LA'
+WHEN "state" ILIKE '%maine%' THEN 'ME'
+WHEN "state" ILIKE '%maryland%' THEN 'MD'
+WHEN "state" ILIKE '%massachusetts%' THEN 'MA'
+WHEN "state" ILIKE '%michigan%' THEN 'MI'
+WHEN "state" ILIKE '%minnesota%' THEN 'MN'
+WHEN "state" ILIKE '%mississippi%' THEN 'MS'
+WHEN "state" ILIKE '%missouri%' THEN 'MO'
+WHEN "state" ILIKE '%montana%' THEN 'MT'
+WHEN "state" ILIKE '%nebraska%' THEN 'NE'
+WHEN "state" ILIKE '%nevada%' THEN 'NV'
+WHEN "state" ILIKE '%new hampshire%' THEN 'NH'
+WHEN "state" ILIKE '%new jersey%' THEN 'NJ'
+WHEN "state" ILIKE '%new mexico%' THEN 'NM'
+WHEN "state" ILIKE '%new york%' THEN 'NY'
+WHEN "state" ILIKE '%north carolina%' THEN 'NC'
+WHEN "state" ILIKE '%north dakota%' THEN 'ND'
+WHEN "state" ILIKE '%Northern Mariana Islands%' THEN 'MP'
+WHEN "state" ILIKE '%ohio%' THEN 'OH'
+WHEN "state" ILIKE '%oklahoma%' THEN 'OK'
+WHEN "state" ILIKE '%oregon%' THEN 'OR'
+WHEN "state" ILIKE '%pennsylvania%' THEN 'PA'
+WHEN "state" ILIKE '%puerto rico%' THEN 'PR'
+WHEN "state" ILIKE '%rhode island%' THEN 'RI'
+WHEN "state" ILIKE '%south carolina%' THEN 'SC'
+WHEN "state" ILIKE '%south dakota%' THEN 'SD'
+WHEN "state" ILIKE '%tennessee%' THEN 'TN'
+WHEN "state" ILIKE '%texas%' THEN 'TX'
+WHEN "state" ILIKE '%utah%' THEN 'UT'
+WHEN "state" ILIKE '%vermont%' THEN 'VT'
+WHEN "state" ILIKE '%virgin islands%' THEN 'VI'
+WHEN "state" ILIKE '%virginia%' THEN 'VA'
+WHEN "state" ILIKE '%washington%' THEN 'WA'
+WHEN "state" ILIKE '%west virginia%' THEN 'WV'
+WHEN "state" ILIKE '%wisconsin%' THEN 'WI'
+WHEN "state" ILIKE '%wyoming%' THEN 'WY'
+ELSE '' END AS StateABB
+INTO nEMPG
+FROM EMPG;
+-- SELECT * From nEMPG;
+
+
+/* Import National Risk Index(NRI) shapefiles. */
+SELECT * From nri;
+DROP TABLE IF EXISTS nNRI;
+CREATE TABLE nNRI AS 
+TABLE nri;
+SELECT * From nNRI;
+
+/* Create a new table about CERT contains 7 frequent disasters that shared with NRI database: earthquake, flood, 
+hurricane coastal storm, tornado, tsunami, volcanic eruption, winter storms. */
+DROP TABLE IF EXISTS nCERT;
+CREATE TABLE ncert AS TABLE cert;
+
+ALTER TABLE nCERT   
+DROP COLUMN Excessive_Heat, 
+DROP COLUMN Missing_Person_Search,
+DROP COLUMN Landslide_Mudflow,
+DROP COLUMN Pandemic,
+DROP COLUMN Severe_Thunderstorm,
+DROP COLUMN Wildland_Urban_Interface_Fire,
+DROP COLUMN Do_Not_Know;  
+
+SELECT * FROM nCERT;
+
+
+
+-- Count the number of Community Emergency Response Teams in each state in descending order. (nCERT)
+DROP TABLE IF EXISTS ccount;
+CREATE TABLE ccount (
+    id SERIAL PRIMARY KEY,
+	state text,
+    count integer
+);
+-- SELECT * FROM ccount;
+/* Number of Community Emergency Response Teams for Earthquake */
+DROP TABLE IF EXISTS cearthquake;
+CREATE TABLE cearthquake AS 
+TABLE ccount;
+
+INSERT INTO cearthquake (state, count)
+SELECT state, COUNT (*)
+FROM ncert 
+WHERE earthquake=1
+GROUP BY state;
+SELECT * From cearthquake;
+
+/* Number of Community Emergency Response Teams for flood */
+DROP TABLE IF EXISTS cflood;
+CREATE TABLE cflood AS 
+TABLE ccount;
+
+INSERT INTO cflood(state, count)
+SELECT state, COUNT (*)
+FROM ncert 
+WHERE flood=1
+GROUP BY state;
+SELECT * From cflood;
+
+/* Number of Community Emergency Response Teams for hurricane/coastal storm */
+DROP TABLE IF EXISTS cstormhc;
+CREATE TABLE cstormhc AS 
+TABLE ccount;
+
+INSERT INTO cstormhc(state, count)
+SELECT state, COUNT (*)
+FROM ncert 
+WHERE hurricane_coastal_storm=1
+GROUP BY state;
+SELECT * From cstormhc;
+
+/* Number of Community Emergency Response Teams for tornado */
+DROP TABLE IF EXISTS ctornado;
+CREATE TABLE ctornado AS 
+TABLE ccount;
+
+INSERT INTO ctornado(state, count)
+SELECT state, COUNT (*)
+FROM ncert 
+WHERE tornado=1
+GROUP BY state;
+SELECT * From ctornado;
+
+/* Number of Community Emergency Response Teams for tsunami */
+DROP TABLE IF EXISTS ctsunami;
+CREATE TABLE ctsunami AS 
+TABLE ccount;
+
+INSERT INTO ctsunami(state, count)
+SELECT state, COUNT (*)
+FROM ncert 
+WHERE tsunami=1
+GROUP BY state;
+SELECT * From ctsunami;
+
+/* Number of Community Emergency Response Teams for volcanic eruption */
+DROP TABLE IF EXISTS cvolcanic;
+CREATE TABLE cvolcanic AS 
+TABLE ccount;
+
+INSERT INTO cvolcanic(state, count)
+SELECT state, COUNT (*)
+FROM ncert 
+WHERE volcanic_eruption = 1
+GROUP BY state;
+SELECT * From cvolcanic;
+
+/* Number of Community Emergency Response Teams for winter storm */
+DROP TABLE IF EXISTS cstormw;
+CREATE TABLE cstormw AS 
+TABLE ccount;
+
+INSERT INTO cstormw(state, count)
+SELECT state, COUNT (*)
+FROM ncert 
+WHERE winter_storm = 1
+GROUP BY state;
+SELECT * From cstormw;
+
+
+
+/* Expected Annual Loss Scores of the frequent disasters in each state.(nNRI) */	
+-- Coastal Flooding: New Jersey, Washington, Florida, Oregon, Louisiana
+SELECT state, cfld_eals
+FROM nNRI
+ORDER BY cfld_eals DESC;
+
+-- River Flooding: Texas, Louisiana, Tennessee, Florida, California
+SELECT state, RFLD_EALS
+FROM nNRI
+ORDER BY RFLD_EALS DESC;
+
+-- Earthquake: California, Washington, Oregon, Tennessee, Utah
+SELECT state, ERQK_EALS
+FROM nNRI
+ORDER BY ERQK_EALS DESC;
+
+-- Hurricane: Texas, Florida, Louisiana, North Carolina, Mississippi
+SELECT state, HRCN_EALS
+FROM nNRI
+ORDER BY HRCN_EALS DESC;
+
+-- Tornado: Texas, Illinois, Georgia, Tennessee, Alabama 
+SELECT state, TRND_EALS
+FROM nNRI
+ORDER BY TRND_EALS DESC;
+
+--  Tsunami: Hawaii, California, Oregon, Washington, Alaska 
+SELECT state, TSUN_EALS
+FROM nNRI
+ORDER BY TSUN_EALS DESC;
+
+--  Volcanic Activity: Washington, Oregon, California, Alaska, Hawaii 
+SELECT state, VLCN_EALS
+FROM nNRI
+ORDER BY VLCN_EALS DESC;
+
+-- Ice Storm: Oklahoma, Missouri, Arkansas, North Carolina, Texas 
+SELECT state, ISTM_EALS
+FROM nNRI
+ORDER BY ISTM_EALS DESC;
+
+
+
+/* Calculate the amount of the emergency fundings in each state in descending order. (nEMPG)*/
+SELECT state, SUM(empg_total_funding) AS total_funding
+FROM nempg
+GROUP BY state
+ORDER BY total_funding DESC;
+
+
+
+/* Q1. Disaster risk (NRI) with CERT numbers (nCERT), inner join by state(CERT), stateabbrv(NRI) */
+DROP TABLE IF EXISTS nri_cert;
+CREATE TABLE nri_cert AS
+SELECT 
+    n.state, n.stateabbrv, n.population, n.buildvalue, n.agrivalue, n.area,
+	n.eal_score, n.eal_ratng, n.eal_npctl, n.eal_valt, n.eal_valb, 
+	n.eal_valp, n.eal_valpe, n.eal_vala,
+	n.cfld_evnts, n.cfld_expp, n.cfld_eals, n.cfld_ealr, 
+	n.rfld_evnts, n.rfld_expp, n.rfld_eals, n.rfld_ealr, 
+	n.erqk_evnts, n.erqk_expp, n.erqk_eals, n.erqk_ealr,
+	n.hrcn_evnts, n.hrcn_expp, n.hrcn_eals, n.hrcn_ealr,
+	n.istm_evnts, n.istm_expp, n.istm_eals, n.istm_ealr,
+	n.trnd_evnts, n.trnd_expp, n.trnd_eals, n.trnd_ealr,
+	n.tsun_evnts, n.tsun_expp, n.tsun_eals, n.tsun_ealr,
+	n.vlcn_evnts, n.vlcn_expp, n.vlcn_eals, n.vlcn_ealr,
+	t.name, t.phone, t.address1, t.address2, t.city, t.zip, 
+	t.country, t.sponsoring_organization, t.jurisdiction_Type,
+	t.tribal, t.zip_or_counties, t.earthquake, t.flood, t.hurricane_coastal_storm,
+	t.tornado, t.tsunami, t.volcanic_eruption, t.winter_storm, n.geom
+FROM nNRI n
+INNER JOIN ncert t
+ON t.state = n.stateabbrv;
+SELECT * From nri_cert;
+
+
+/* Q2. Disaster risk (NRI) with funding (nEMPG), inner join by stateabb(nEMPG), stateabbrv(nNRI) */
+/* Select Number of Events, Exposure Population, Expected Annual Loss Score，Expected Annual Loss Rating of each disaster */
+DROP TABLE IF EXISTS nri_empg;
+CREATE TABLE nri_empg AS
+SELECT 
+    n.state, n.stateabbrv, n.population, n.buildvalue, n.agrivalue, n.area,
+	n.eal_score, n.eal_ratng, n.eal_npctl, n.eal_valt, n.eal_valb, 
+	n.eal_valp, n.eal_valpe, n.eal_vala,
+	n.cfld_evnts, n.cfld_expp, n.cfld_eals, n.cfld_ealr, 
+	n.rfld_evnts, n.rfld_expp, n.rfld_eals, n.rfld_ealr,
+	n.erqk_evnts, n.erqk_expp, n.erqk_eals, n.erqk_ealr,
+	n.hrcn_evnts, n.hrcn_expp, n.hrcn_eals, n.hrcn_ealr,
+	n.istm_evnts, n.istm_expp, n.istm_eals, n.istm_ealr, 
+	n.trnd_evnts, n.trnd_expp, n.trnd_eals, n.trnd_ealr,
+	n.tsun_evnts, n.tsun_expp, n.tsun_eals, n.tsun_ealr,
+	n.vlcn_evnts, n.vlcn_expp, n.vlcn_eals, n.vlcn_ealr,
+	e.legal_agency_name, e.project_type, e.empg_total_funding, n.geom
+FROM nNRI n
+INNER JOIN nEMPG e
+ON e.stateabb = n.stateabbrv;
+SELECT * From nri_empg;
+
+
+
+
+
+
+
+
+
